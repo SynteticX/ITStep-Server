@@ -5,7 +5,7 @@ const SECRET_KEY = (process.env.SECRET_KEY) ? process.env.SECRET_KEY : "jkhdfbg6
 function verifyToken(req, res, next) {
 
     // Токен который прислал клиент
-    const token = req.headers['authorization'];
+    const token = req.headers['authorization'].replace("Bearer ", "");
 
     // Проверяем был ли прислан токен
     if (!token) {

@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt'); // Шифрование паролей
 const jwt = require('jsonwebtoken'); // Библиотека JWT токенов
 const sql = require('../middleware/db'); // Запросы в БД
+const SECRET_KEY = (process.env.SECRET_KEY) ? process.env.SECRET_KEY : "jkhdfbg6fdgdsg";
 
 // Контроллер для авторизации пользователей
 async function auth(req, res) {
@@ -43,7 +44,7 @@ async function auth(req, res) {
     
         // Генерируем токен
         const token = jwt.sign({ login }, SECRET_KEY, { expiresIn: '1h' });
-        return token;
+        res.status(200).json({ message: "Успешная авторизация!", token });
     } catch (err) {
         console.log(err);
         res.status(500).json({ message: "Ошибка при выполнении запроса" });
