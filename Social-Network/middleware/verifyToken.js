@@ -1,4 +1,5 @@
-const SECRET_KEY = "secret-token";
+const jwt = require('jsonwebtoken'); // Библиотека JWT токенов
+const SECRET_KEY = (process.env.SECRET_KEY) ? process.env.SECRET_KEY : "jkhdfbg6fdgdsg";
 
 // Функция для авторизации пользователя по ключу
 function verifyToken(req, res, next) {
@@ -11,12 +12,16 @@ function verifyToken(req, res, next) {
         return res.status(403).json({error: "Вы не авторизованы!"});
     }
 
-    // Проверяем токен
-    if (token !== SECRET_KEY) {
-        return res.status(403).json({error: "Токен не верный!"});
-    }
+    // Валидация токена (проверка на совпадение с ключом от сервера)
+    jwt.verify(token, SECRET_KEY, (err, user) => {
+        // Обработка ошибки
+        if (err) {
+            return res.status(403).json({ message: "Токен недействителен!" });
+        }
 
-    next();
+        next(); // Если токен валидный, пропускаем запрос
+    })
+
 }
 
 module.exports = verifyToken;

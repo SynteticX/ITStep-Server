@@ -6,6 +6,7 @@ const PORT = 3000;
 const app = express();
 
 // Импорт маршрутов
+const authRoutes = require('./routes/authRoutes'); // Маршрут авторизации
 const apiRoutes = require('./routes/apiRoutes'); // Маршрут API
 
 // Middleware
@@ -13,6 +14,7 @@ app.use(cors()); // Разрешаем подключение с любого IP
 app.use(express.json()); // Парсим JSON запросы
 
 // Маршрутизация
+app.use('/auth', authRoutes);
 app.use('/api', apiRoutes);
 
 // GET-запрос

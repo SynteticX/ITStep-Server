@@ -14,37 +14,26 @@
 <body>
 
     <div class="container">
-        <table class="table">
-            <thead>
-                <td>ID</td>
-                <td>Имя</td>
-            </thead>
-            <tbody>
-
-            </tbody>
-        </table>
+        <form>
+            <input type="text" name="login">
+            <input type="password" name="password">
+        </form>
+        <button onclick="auth()">Войти</button>
     </div>
 
     <script>
-        fetch("http://localhost:3000/api/users", {
-            method: "GET",
-            headers: {
-                "Authorization": "secret-token"
-            }
-        })
-            .then(data => data.json())
-            .then(res => {
-                console.log(res)
-                for (let user of res.message) {
-                    // Заполняем таблицу данными
-                    document.querySelector('tbody').innerHTML += `
-                    <tr>
-                        <td>${user.id}</td>
-                        <td>${user.name}</td>
-                    </tr>
-                    `
-                }
+        function auth() {
+            let login = document.querySelector('input[name="login"]').value;
+            let password = document.querySelector('input[name="password"]').value;
+
+            fetch("http://localhost:3000/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ login, password })
             })
+        }
     </script>
 </body>
 
