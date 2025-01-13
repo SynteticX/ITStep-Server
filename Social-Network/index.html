@@ -21,8 +21,8 @@
         </form>
 
         <div class="card">
-            <div class="card-body">
-                <button class="btn btn-primary" onclick="fetchUser()">Обновить</button>
+            <div class="card-body" id="content">
+                
             </div>
         </div>
     </div>
@@ -45,8 +45,16 @@
                     return;
                 }
                 sessionStorage.setItem("token", data.token);
-                sessionStorage.setItem("user", JSON.stringify({ login: data.user }));
+                sessionStorage.setItem("user", JSON.stringify(data.user));
                 document.querySelector('form').style.display = 'none';
+
+                let user = JSON.parse(sessionStorage.getItem("user"));
+                let content = document.querySelector('#content');
+                if (user.usergroup == 1) {
+                    content.innerHTML += "Администратор"
+                } else {
+                    content.innerHTML += "Пользователь"
+                }
             });
         }
     </script>
