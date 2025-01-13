@@ -9,7 +9,11 @@ exports.getAllUsers = async (req, res) => {
 // Получаем инфу о конкретном пользователе
 exports.getUser = async (req, res) => {
     const userId = req.params.id;
-    const [user] = await sql.query('SELECT * FROM `users` WHERE `id`=' + userId);
+    if (parseInt(userId) !== undefined && parseInt(userId) !== NaN) {
+        const [user] = await sql.query('SELECT * FROM `users` WHERE `id`=' + userId);
+    } else {
+        // const [user] = await sql.query('SELECT * FROM `users` WHERE `id`=' + userId);
+    }
     res.json({message: user});
 }
 

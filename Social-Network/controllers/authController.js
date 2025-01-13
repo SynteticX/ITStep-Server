@@ -44,7 +44,7 @@ async function auth(req, res) {
     
         // Генерируем токен
         const token = jwt.sign({ login }, SECRET_KEY, { expiresIn: '1h' });
-        res.status(200).json({ message: "Успешная авторизация!", token });
+        res.status(200).json({ message: "Успешная авторизация!", token, user });
     } catch (err) {
         console.log(err);
         res.status(500).json({ message: "Ошибка при выполнении запроса" });
