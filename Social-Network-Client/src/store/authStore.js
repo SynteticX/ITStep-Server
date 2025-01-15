@@ -45,9 +45,6 @@ const authStore = defineStore("auth", () => {
             // Записываем в хранилище полученную информацию
             mainStore.token = data.token;
             mainStore.user = data.user;
-
-            // Записываем токен в куки
-            VueCookie.set("token", mainStore.token, 60 * 60);
         }
         // Неверный логин или пароль (или не введен)
         if (response.status && response.status == 400) {
@@ -61,16 +58,21 @@ const authStore = defineStore("auth", () => {
 
     const verifyToken = async () => {
         // Проверяем, валидный ли токен
-        const response = await fetch(mainStore.API + "/auth/verifyToken", {
+        const response = await fetch(mainStore.API + "auth/verifyToken", {
             method: "POST",
             headers: {
                 "Authorization": "Bearer " + mainStore.token
             },
             body: JSON.stringify({})
-        })
+        });
+
+        if (response.status == 403) {
+            // Если токен недействителен, удаляем токен
+            mainStore.token = null;
+        }
     };
 
-    return { handleAuth, getTokenFromCookie };
+    return { handleAuth, getTokenFromCookie, verifyToken };
 })
 
 export default authStore;

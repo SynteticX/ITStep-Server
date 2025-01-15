@@ -6,9 +6,15 @@ import useAuthStore from "./store/authStore";
   const store = mainStore();
   const authStore = useAuthStore();
 
+  // Проверяем наличие и валидность токена
+  if (!store.token) {
+    console.log("Нужно авторизоваться!")
+  } else {
+    authStore.verifyToken();
+  }
+
   const login = ref("");
   const password = ref("");
-  console.log(authStore.getTokenFromCookie());
 
   const handleClick = async () => {
     await authStore.handleAuth(login.value, password.value);
