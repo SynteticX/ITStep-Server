@@ -7,11 +7,7 @@ const authStore = defineStore("auth", () => {
 
     const getTokenFromCookie = () => {
         // Вытаскиваем из куки токен
-        console.log(VueCookie.keys);
-        const cookieValue = document.cookie
-            .split("; ")
-            .find((row) => row.startsWith("token="))
-            ?.split("=")[1];
+        const cookieValue = VueCookie.get("token");
 
         if (cookieValue && cookieValue !== undefined) {
             return cookieValue;
@@ -50,10 +46,8 @@ const authStore = defineStore("auth", () => {
             mainStore.token = data.token;
             mainStore.user = data.user;
 
-            const expiresTime = new Date();
-            expiresTime.setTime(expiresTime.getTime() + 60 * 60 * 1000);
-            // document.cookie = `token=${mainStore.token}`;
-            VueCookie.set("token", mainStore.token);
+            // Записываем токен в куки
+            VueCookie.set("token", mainStore.token, 60 * 60);
         }
         // Неверный логин или пароль (или не введен)
         if (response.status && response.status == 400) {
