@@ -34,12 +34,22 @@ const useMainStore = defineStore('main', () => {
         }
         const data = await response.json();
 
+        // Успешная авторизация
         if (response.status && response.status == 200) {
-            console.log(data);
+            // Записываем в хранилище полученную информацию
+            token.value = data.token;
+            user.value = data.user;
+
+            const expiresTime = new Date();
+            expiresTime.setTime(expiresTime.getTime() + 60 * 60 * 1000);
+            document.cookie = `token=${token.value};expires=${expiresTime.toUTCString()};path=/`;
+            console.log(`token=${token.value};expires=${expiresTime.toUTCString()};path=/`);
         }
+        // Неверный логин или пароль (или не введен)
         if (response.status && response.status == 400) {
             console.log(data);
         }
+        // Ошибки при запросе на сервере
         if (response.status && response.status == 500) {
             console.log(data);
         }

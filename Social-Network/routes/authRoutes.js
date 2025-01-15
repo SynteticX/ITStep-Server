@@ -10,5 +10,6 @@ const authController = require('../controllers/authController');
 
 // Обработка маршрутов
 router.post("/login", authController.auth);
+router.post("/verifyToken", verifyToken, (req, res) => {res.json({status: "OK"})});
 
 module.exports = router;
