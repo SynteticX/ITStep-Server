@@ -1,17 +1,19 @@
 <script setup>
 import { ref } from "vue";
 import mainStore from "./store/store";
+import useAuthStore from "./store/authStore";
 
   const store = mainStore();
+  const authStore = useAuthStore();
 
   const login = ref("");
   const password = ref("");
 
   const handleClick = async () => {
-    await store.handleAuth(login.value, password.value);
+    await authStore.handleAuth(login.value, password.value);
   }
 
-  
+
 </script>
 
 <template>
