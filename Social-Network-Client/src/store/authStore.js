@@ -1,10 +1,26 @@
 import { defineStore } from "pinia";
 import useMainStore from "./store";
+import VueCookie from "vue-cookies";
 
 const authStore = defineStore("auth", () => {
-    const handleAuth = async (login, password) => {
+    const mainStore = useMainStore();
 
-        const mainStore = useMainStore();
+    const getTokenFromCookie = () => {
+        // Вытаскиваем из куки токен
+        console.log(VueCookie.keys);
+        const cookieValue = document.cookie
+            .split("; ")
+            .find((row) => row.startsWith("token="))
+            ?.split("=")[1];
+
+        if (cookieValue && cookieValue !== undefined) {
+            return cookieValue;
+        } else {
+            return null;
+        }
+    }
+
+    const handleAuth = async (login, password) => {
 
         const query = {
             login: login,
@@ -36,7 +52,8 @@ const authStore = defineStore("auth", () => {
 
             const expiresTime = new Date();
             expiresTime.setTime(expiresTime.getTime() + 60 * 60 * 1000);
-            document.cookie = `token=${mainStore.token};expires=${expiresTime.toUTCString()};path=/`;
+            // document.cookie = `token=${mainStore.token}`;
+            VueCookie.set("token", mainStore.token);
         }
         // Неверный логин или пароль (или не введен)
         if (response.status && response.status == 400) {
@@ -46,9 +63,20 @@ const authStore = defineStore("auth", () => {
         if (response.status && response.status == 500) {
             console.log(data);
         }
-    }
+    };
 
-    return { handleAuth };
+    const verifyToken = async () => {
+        // Проверяем, валидный ли токен
+        const response = await fetch(mainStore.API + "/auth/verifyToken", {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + mainStore.token
+            },
+            body: JSON.stringify({})
+        })
+    };
+
+    return { handleAuth, getTokenFromCookie };
 })
 
 export default authStore;

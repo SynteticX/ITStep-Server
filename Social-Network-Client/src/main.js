@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import { createMemoryHistory, createRouter } from 'vue-router';
 import { createPinia } from 'pinia';
+import VueCookie from "vue-cookies";
 import './style.css'
 import App from './App.vue'
 
@@ -15,4 +16,4 @@ const router = createRouter({
 
 const pinia = createPinia();
 
-createApp(App).use(router).use(pinia).mount('#app');
+createApp(App).use(router).use(pinia).use(VueCookie).mount('#app');

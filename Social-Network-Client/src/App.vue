@@ -8,6 +8,7 @@ import useAuthStore from "./store/authStore";
 
   const login = ref("");
   const password = ref("");
+  authStore.getTokenFromCookie();
 
   const handleClick = async () => {
     await authStore.handleAuth(login.value, password.value);
