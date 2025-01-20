@@ -19,22 +19,10 @@ if (!store.token) {
     }
   }();
 }
-
-const login = ref("");
-const password = ref("");
-
-const handleClick = async () => {
-  await authStore.handleAuth(login.value, password.value);
-}
 </script>
 
 <template>
-  <div>
-    <input type="text" name="login" v-model="login">
-    <input type="password" name="password" v-model="password">
-    <button @click="handleClick">Login</button>
-  </div>
-  <div>
-    {{ store.user.name }}
-  </div>
+  <router-link to="/">Main</router-link>
+  <router-link to="/login">Login</router-link>
+  <router-view></router-view>
 </template>
