@@ -10,7 +10,6 @@
 import { ref } from "vue";
 import useAuthStore from "../store/authStore";
 
-const store = mainStore();
 const authStore = useAuthStore();
 
 const login = ref("");
