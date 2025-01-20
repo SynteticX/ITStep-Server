@@ -9,6 +9,9 @@
 <script setup>
 import { ref } from "vue";
 import useAuthStore from "../store/authStore";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const authStore = useAuthStore();
 
@@ -16,6 +19,9 @@ const login = ref("");
 const password = ref("");
 
 const handleClick = async () => {
-  await authStore.handleAuth(login.value, password.value);
+  const response = await authStore.handleAuth(login.value, password.value);
+  if (response === true) {
+    router.push("/");
+  }
 }
 </script>

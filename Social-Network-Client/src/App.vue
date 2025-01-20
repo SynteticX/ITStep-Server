@@ -2,13 +2,18 @@
 import { ref } from "vue";
 import mainStore from "./store/store";
 import useAuthStore from "./store/authStore";
+import {useRouter} from 'vue-router';
 
 const store = mainStore();
 const authStore = useAuthStore();
 
+// Вызываем роутер
+const router = useRouter();
+
 // Проверяем наличие и валидность токена
 if (!store.token) {
   console.log("Нужно авторизоваться!")
+  router.push({path: '/login', replace: true});
 } else {
   const verifyToken = async function() {
     const result = await authStore.verifyToken()
@@ -22,7 +27,5 @@ if (!store.token) {
 </script>
 
 <template>
-  <router-link to="/">Main</router-link>
-  <router-link to="/login">Login</router-link>
   <router-view></router-view>
 </template>

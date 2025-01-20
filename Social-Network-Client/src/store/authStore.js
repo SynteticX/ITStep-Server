@@ -45,6 +45,8 @@ const authStore = defineStore("auth", () => {
             // Записываем в хранилище полученную информацию
             mainStore.token = data.token;
             mainStore.user = data.user;
+
+            return true;
         }
         // Неверный логин или пароль (или не введен)
         if (response.status && response.status == 400) {
