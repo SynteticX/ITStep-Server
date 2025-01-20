@@ -69,6 +69,15 @@ const authStore = defineStore("auth", () => {
         if (response.status == 403) {
             // Если токен недействителен, удаляем токен
             mainStore.token = null;
+            return null;
+        }
+
+        if (response.status == 200) {
+            // const result = await response.json();
+            // if (result.message == "OK") {
+            //     return true;
+            // }
+            return true;
         }
     };
 

@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { ref, watch } from "vue";
+import VueCookie from "vue-cookies";
 import useAuthStore from "./authStore";
 
 const useMainStore = defineStore('main', () => {

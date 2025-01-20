@@ -3,24 +3,29 @@ import { ref } from "vue";
 import mainStore from "./store/store";
 import useAuthStore from "./store/authStore";
 
-  const store = mainStore();
-  const authStore = useAuthStore();
+const store = mainStore();
+const authStore = useAuthStore();
 
-  // Проверяем наличие и валидность токена
-  if (!store.token) {
-    console.log("Нужно авторизоваться!")
-  } else {
-    authStore.verifyToken();
-  }
+// Проверяем наличие и валидность токена
+if (!store.token) {
+  console.log("Нужно авторизоваться!")
+} else {
+  const verifyToken = async function() {
+    const result = await authStore.verifyToken()
+    if (!result) {
+      console.log(result)
+    } else {
+      console.log(result)
+    }
+  }();
+}
 
-  const login = ref("");
-  const password = ref("");
+const login = ref("");
+const password = ref("");
 
-  const handleClick = async () => {
-    await authStore.handleAuth(login.value, password.value);
-  }
-
-
+const handleClick = async () => {
+  await authStore.handleAuth(login.value, password.value);
+}
 </script>
 
 <template>
