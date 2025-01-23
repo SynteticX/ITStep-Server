@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt'); // Шифрование паролей
 const jwt = require('jsonwebtoken'); // Библиотека JWT токенов
 const sql = require('../middleware/db'); // Запросы в БД
 const SECRET_KEY = (process.env.SECRET_KEY) ? process.env.SECRET_KEY : "jkhdfbg6fdgdsg";
-
+exports.SECRET_KEY = SECRET_KEY;
 // Контроллер для авторизации пользователей
 async function auth(req, res) {
 
