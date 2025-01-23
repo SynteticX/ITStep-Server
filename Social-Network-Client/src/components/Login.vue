@@ -1,8 +1,14 @@
 <template>
-    <div>
-        <input type="text" name="login" v-model="login">
-        <input type="password" name="password" v-model="password">
-        <button @click="handleClick">Login</button>
+    <div class="container">
+      <div class="card">
+        <div class="card-body">
+          <label for="" class="form-label">Логин</label>
+          <input class="form-control" type="text" name="login" v-model="login" placeholder="Логин">
+          <label for="" class="form-label">Пароль</label>
+          <input class="form-control" type="password" name="password" v-model="password" placeholder="Пароль">
+          <button @click="handleClick" class="mt-3 btn btn-primary">Войти</button>
+        </div>
+      </div>
     </div>
 </template>
 
