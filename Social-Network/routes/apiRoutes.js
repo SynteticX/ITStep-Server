@@ -11,7 +11,7 @@ const postController = require('../controllers/postController');
 
 // Обработка пути /api/users
 router.get('/users', verifyToken, userController.getAllUsers);
-router.get('/users/:id', verifyToken, userController.getUser);
+router.get('/users/:id', userController.getUser);
 router.get('/posts', postController.getAllPosts);
 
 module.exports = router;
