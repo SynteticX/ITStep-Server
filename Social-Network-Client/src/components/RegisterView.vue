@@ -4,6 +4,7 @@
         <div class="card-body">
           <label for="" class="form-label">Логин</label>
           <input class="form-control" type="text" name="login" v-model="login" placeholder="Логин" @change="checkUsername">
+          <p style="color: red">{{ login_err }}</p>
           <label for="" class="form-label">Пароль</label>
           <input class="form-control" type="password" name="password" v-model="password" placeholder="Пароль">
           <label for="" class="form-label">Повторите пароль</label>
@@ -23,10 +24,16 @@
     const login = ref("");
     const password = ref("");
     const repeat_password = ref("");
+    const login_err = ref("");
 
     const checkUsername = async () => {
         const user = await authStore.getUser(login.value);
-        console.log(user);
+        if (user.message.length > 0) {
+            login_err.value = "Это имя пользователя уже занято!"
+        } else {
+            login_err.value = "";
+            
+        }
     }
 
     // Сравниваем поля для ввода пароля
