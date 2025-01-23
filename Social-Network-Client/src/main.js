@@ -6,10 +6,12 @@ import './style.css'
 import App from './App.vue'
 import MainView from './components/MainView.vue'
 import Login from './components/Login.vue'
+import RegisterView from './components/RegisterView.vue';
 
 const routes = [
     { path: "/", component: MainView },
-    { path: "/login", component: Login }
+    { path: "/login", component: Login },
+    { path: "/register", component: RegisterView }
 ];
 
 const router = createRouter({

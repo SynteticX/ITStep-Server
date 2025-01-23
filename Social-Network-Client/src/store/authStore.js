@@ -83,7 +83,16 @@ const authStore = defineStore("auth", () => {
         }
     };
 
-    return { handleAuth, getTokenFromCookie, verifyToken };
+    const getUser = async (login) => {
+        const response = await fetch(mainStore.API + "api/users/" + login);
+        if (!response.ok) {
+            console.log("Ошибка при запросе!")
+        }
+        const data = await response.json();
+        return data;
+    }
+
+    return { handleAuth, getTokenFromCookie, verifyToken, getUser };
 })
 
 export default authStore;

@@ -1,0 +1,44 @@
+<template>
+    <div class="container">
+      <div class="card">
+        <div class="card-body">
+          <label for="" class="form-label">Логин</label>
+          <input class="form-control" type="text" name="login" v-model="login" placeholder="Логин" @change="checkUsername">
+          <label for="" class="form-label">Пароль</label>
+          <input class="form-control" type="password" name="password" v-model="password" placeholder="Пароль">
+          <label for="" class="form-label">Повторите пароль</label>
+          <input class="form-control" type="password" name="repeat_password" v-model="repeat_password" placeholder="Повторите пароль">
+          <button @click="handleClick" class="mt-3 btn btn-primary" :disabled="!validPasswords">Зарегистрироваться</button>
+        </div>
+      </div>
+    </div>
+</template>
+
+<script setup>
+    import { ref, computed } from 'vue';
+    import useAuthStore from '../store/authStore';
+
+    const authStore = useAuthStore();
+
+    const login = ref("");
+    const password = ref("");
+    const repeat_password = ref("");
+
+    const checkUsername = async () => {
+        const user = await authStore.getUser(login.value);
+        console.log(user);
+    }
+
+    // Сравниваем поля для ввода пароля
+    const validPasswords = computed(() => {
+        // Проверяем введены ли пароли
+        if (password.value && repeat_password.value) {
+            // Проверка на длину пароля
+            if (password.value.length >= 6) {
+                return password.value === repeat_password.value;
+            }
+        }
+        
+        return false;
+    })
+</script>

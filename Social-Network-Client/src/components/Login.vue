@@ -8,6 +8,7 @@
           <input class="form-control" type="password" name="password" v-model="password" placeholder="Пароль">
           <button @click="handleClick" class="mt-3 btn btn-primary">Войти</button>
         </div>
+        <button @click="register">Зарегистрироваться</button>
       </div>
     </div>
 </template>
@@ -29,5 +30,9 @@ const handleClick = async () => {
   if (response === true) {
     router.push("/");
   }
+}
+// Переадресация на регистрацию
+const register = () => {
+  router.push("/register");
 }
 </script>
