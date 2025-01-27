@@ -2,11 +2,11 @@
     <div class="container card">
         <div>
             <label for="">Введите текст поста</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" v-model="text">
         </div>
         <div>
             <label for="">URL картинки</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" v-model="img">
         </div>
         <button @click="sendPost" class="btn btn-primary">Отправить</button>
     </div>
@@ -21,6 +21,6 @@ import usePostStore from '../store/postStore';
     const img = ref("");
 
     const sendPost = () => {
-        postStore.sendPost({ text, img });
+        postStore.sendPost({ text: text.value, img: img.value });
     }
 </script>

@@ -32,6 +32,8 @@ const usePostStore = defineStore("posts", () => {
         const { text, img } = data;
         const userId = store.user.id;
 
+        console.log({ userId, text, img })
+
         const response = await fetch(store.API + "api/addpost", {
             method: "POST",
             headers: {
