@@ -28,7 +28,33 @@ const usePostStore = defineStore("posts", () => {
         }
     }
 
-    return { posts, getAllPosts };
+    const sendPost = async (data) => {
+        const { text, img } = data;
+        const userId = store.user.id;
+
+        const response = await fetch(store.API + "api/addpost", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + store.token
+            },
+            body: JSON.stringify({ userId, text, img })
+        });
+
+        if (!response.ok) {
+            console.log("Ошибка при выполнении запроса!");
+        }
+
+        if (response) {
+            console.log(response);
+            const data = await response.json();
+
+            // if (data.status == 200)
+        }
+
+    }
+
+    return { posts, getAllPosts, sendPost };
 });
 
 export default usePostStore;
