@@ -16,7 +16,6 @@ const useMainStore = defineStore('main', () => {
     });
 
     watch(user, (newValue, oldValue) => {
-        console.log(111111111)
         // Записываем инфу о пользователе в localStorage
         localStorage.setItem("user", JSON.stringify(newValue));
     }, {deep: true});
