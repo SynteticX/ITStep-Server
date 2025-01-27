@@ -7,11 +7,13 @@ import App from './App.vue'
 import MainView from './components/MainView.vue'
 import Login from './components/Login.vue'
 import RegisterView from './components/RegisterView.vue';
+import PostCreateView from './components/PostCreateView.vue';
 
 const routes = [
     { path: "/", component: MainView },
     { path: "/login", component: Login },
-    { path: "/register", component: RegisterView }
+    { path: "/register", component: RegisterView },
+    { path: "/sendpost", component: PostCreateView },
 ];
 
 const router = createRouter({

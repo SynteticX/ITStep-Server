@@ -1,9 +1,10 @@
 <template>
     <div class="container ">
         <div>
-            <div class="d-flex">
+            <div class="d-flex gap-1">
                 <button @click="handleClick()" class="btn btn-info"><i class="fas fa-sync-alt"
                         style="color: white"></i></button>
+                <button @click="router.push('/sendpost')" class="btn btn-success"><i class="fas fa-plus"></i></button>
             </div>
 
             <div class="d-flex" v-for="(post) in posts">
@@ -29,6 +30,9 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue';
 import usePostStore from '../store/postStore';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 const postStore = usePostStore();
 
 onMounted(async () => {
