@@ -9,6 +9,13 @@ exports.getAllPosts = async (req, res) => {
 // Создание поста
 exports.addPost = async (req, res) => {
     const { userId, text, img } = req.body;
-    const query = 'INSERT INTO posts (author, text, img) VALUES (?, ?, ?)';
-    const response = await sql.query(query, [userId, text, img]);
+    // Проверяем что все необходимые данные получены
+    if (userId && (text || img)) {
+        const query = 'INSERT INTO posts (author, text, img) VALUES (?, ?, ?)';
+        const response = await sql.query(query, [userId, text, img]);
+        console.log(response);
+        if (response) {
+            res.status(200).json({ message: "OK" })
+        }
+    }
 }
