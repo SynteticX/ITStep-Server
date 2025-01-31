@@ -35,4 +35,11 @@ const handleClick = async () => {
 const register = () => {
   router.push("/register");
 }
+
+// Авторизация по клавише Enter
+document.addEventListener("keydown", (event) => {
+  if (event.code === "Enter") {
+    handleClick();
+  }
+})
 </script>

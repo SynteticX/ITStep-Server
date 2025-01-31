@@ -9,7 +9,7 @@
           <input class="form-control" type="password" name="password" v-model="password" placeholder="Пароль">
           <label for="" class="form-label">Повторите пароль</label>
           <input class="form-control" type="password" name="repeat_password" v-model="repeat_password" placeholder="Повторите пароль">
-          <button @click="handleClick" class="mt-3 btn btn-primary" :disabled="!validPasswords">Зарегистрироваться</button>
+          <button @click="doRegister" class="mt-3 btn btn-primary" :disabled="!validPasswords">Зарегистрироваться</button>
         </div>
       </div>
     </div>
@@ -18,6 +18,7 @@
 <script setup>
     import { ref, computed } from 'vue';
     import useAuthStore from '../store/authStore';
+    import { useRouter } from "vue-router";
 
     const authStore = useAuthStore();
 
@@ -25,6 +26,8 @@
     const password = ref("");
     const repeat_password = ref("");
     const login_err = ref("");
+
+    const router = useRouter();
 
     const checkUsername = async () => {
         const user = await authStore.getUser(login.value);
@@ -48,4 +51,15 @@
         
         return false;
     })
+
+    // Вызываем fetch регистрации
+    const doRegister = async () => {
+        const isRegistered = await authStore.registerUser(login.value, password.value);
+        if (isRegistered === true) {
+            // Переадресация при успешной регистрации
+            router.push("/");
+        } else {
+            // Вывод popup
+        }
+    }
 </script>

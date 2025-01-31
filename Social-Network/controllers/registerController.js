@@ -16,6 +16,11 @@ const register = async (req, res) => {
         // Защищаем запрос от SQL-иньекций, подстраивая абстрактные переменные в VALUES
         const query = 'INSERT INTO users (name, password) VALUES (?, ?  )';
         const response = await sql.query(query, [data.login, hashPassword]);
+        if (response) {
+            res.status(200).json({message: "Вы успешно зарегистрированы!"})
+        } else {
+            res.status(500).json({message: "Ошибка при регистрации!"})
+        }
     }
 }
 

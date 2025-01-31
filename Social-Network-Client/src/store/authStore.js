@@ -92,7 +92,36 @@ const authStore = defineStore("auth", () => {
         return data;
     }
 
-    return { handleAuth, getTokenFromCookie, verifyToken, getUser };
+    // Регистрация
+    const registerUser = async (login, password) => {
+        const response = await fetch(mainStore.API + "auth/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ login, password })
+        });
+
+        if (!response.ok) {
+            console.log("Ошибка при регистрации")
+        }
+        
+        if (response && response.status == 200) {
+            const data = await response.json();
+            return await handleAuth(login, password);
+        }
+        
+        if (response && response.status == 400) {
+            const data = await response.json();
+            return data;
+        }
+        if (response && response.status == 500) {
+            const data = await response.json();
+            return data;
+        }
+    }
+
+    return { handleAuth, getTokenFromCookie, verifyToken, getUser, registerUser };
 })
 
 export default authStore;
