@@ -5,8 +5,9 @@ exports.getAllPosts = async (req, res) => {
     const [users] = await sql.query('SELECT * FROM `users`');
     const [posts] = await sql.query('SELECT * FROM `posts`');
     const result = [];
-    for (let post of posts) {
-        post.author = 
+
+    for (let post of posts.reverse()) {
+        post.author = users.find((u) => u.id == post.author).name;
         result.push(post);
     }
 
