@@ -56,6 +56,31 @@ const usePostStore = defineStore("posts", () => {
 
     }
 
+    const likePost = async (postId) => {
+        const userId = store.user.id;
+
+        const response = await fetch(store.API + "api/likepost", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + store.token
+            },
+            body: JSON.stringify({ userId, postId })
+        });
+
+        if (!response.ok) {
+            console.log("Ошибка при выполнении запроса!");
+        }
+
+        if (response) {
+            console.log(response);
+            const data = await response.json();
+            if (data) {
+                return true;
+            }
+        }
+    }
+
     return { posts, getAllPosts, sendPost };
 });
 
