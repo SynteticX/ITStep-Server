@@ -27,3 +27,35 @@ exports.addPost = async (req, res) => {
         }
     }
 }
+
+exports.likePost = async (req, res) => {
+    const { userId, postId } = req.body;
+    if (userId, postId) {
+        const query = "SELECT * FROM `posts` WHERE id = ?";
+        const [response] = await sql.query(query, [ postId ]);
+
+        // Если пост найден
+        if (response.length > 0) {
+            const post = response[0];
+            let likes = post.likes.split(",");
+            if (post.likes) {
+                const user_like = likes.find(uid => parseInt(uid) == userId);
+                if (user_like === undefined) {
+                    likes.push(userId);
+                } else {
+                    // Если пользователь уже лайкал, удаляем его лайк
+                    likes.splice(likes.indexOf(user_like), 1);
+                }
+            } else {
+                likes.push(userId);
+            }
+
+            const like_query = "UPDATE posts SET likes = ? WHERE id = ?";
+            const like_response = await sql.query(like_query, 
+                [ likes.toString(), postId ]);
+            if (like_response[0].changedRows > 0) {
+                res.status(200).json({ message: "Данные успешно изменены!" });
+            }
+        }
+    }
+}

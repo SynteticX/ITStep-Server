@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from "vue";
 import mainStore from "./store/store";
 import useAuthStore from "./store/authStore";
 import {useRouter} from 'vue-router';
@@ -17,10 +16,11 @@ if (!store.token) {
 } else {
   const verifyToken = async function() {
     const result = await authStore.verifyToken()
-    if (!result) {
-      console.log(result)
+    if (result !== true) {
+      // Если токен просрочен, переадресуем на страницу Login
+      router.push("/login");
     } else {
-      console.log(result)
+      // console.log(result)
     }
   }();
 }

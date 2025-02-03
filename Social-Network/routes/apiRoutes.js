@@ -19,4 +19,7 @@ router.get('/posts', postController.getAllPosts);
 // Создание нового поста /api/addpost
 router.post('/addpost', verifyToken, postController.addPost);
 
+// Функция лайка поста
+router.post("/likepost", postController.likePost);
+
 module.exports = router;
